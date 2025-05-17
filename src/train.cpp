@@ -5,18 +5,6 @@
 
 Train::Train() : countOp(0), first(nullptr) {}
 
-Train::~Train() {
-    Car* current = first;
-    if (current == nullptr) return; // Empty train
-
-    Car* nextCar;
-    do {
-        nextCar = current->next;
-        delete current;
-        current = nextCar;
-    } while (current != first); // Iterate until we loop back to the first car
-}
-
 void Train::addCar(bool light) {
   Car *newCar = new Car;
   newCar->light = light;
@@ -38,7 +26,7 @@ int Train::getLength() {
   if (first == nullptr) return 0;
 
   int length = 0;
-  Car *current = first;
+  const Car *current = first;
   do {
     length++;
     current = current->next;
