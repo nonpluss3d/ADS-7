@@ -1,29 +1,23 @@
 // Copyright 2021 NNTU-CS
-#include <random>
+#include <cstdlib>
 
 #include "train.h"
 
 Train::Train() : countOp(0), first(nullptr) {}
 
 void Train::addCar(bool light) {
-  Car *newCar = new Car;
-  newCar->light = light;
+  Car* newCar = new Car{light, nullptr, nullptr};
 
-  if (first == nullptr) {
+  if (!first) {
     first = newCar;
     newCar->next = newCar;
     newCar->prev = newCar;
-
-    countOp += 3;
   } else {
-    Car *last = first->prev;
-    countOp++;
+    Car* last = first->prev;
     last->next = newCar;
     newCar->prev = last;
     newCar->next = first;
     first->prev = newCar;
-
-    countOp += 6;
   }
 }
 
@@ -32,15 +26,22 @@ int Train::getLength() {
 
   if (!first) return 0;
 
-  int length = 0;
-  const Car *current = first;
-  do {
-    length++;
-    countOp += 2;
-    current = current->next;
-  } while (current != first);
+  Car* current = first;
 
-  return length;
+  current->light = true;
+  countOp++;
+
+  int steps = 1;
+  current = current->next;
+  countOp++;
+
+  while (!current->light) {
+    current = current->next;
+    countOp++;
+    steps++;
+  }
+
+  return steps;
 }
 
 int Train::getOpCount() { return countOp; }
