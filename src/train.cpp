@@ -23,14 +23,14 @@ void Train::addCar(bool light) {
 }
 
 int Train::getLength() {
-  if (first == nullptr) return 0;
+  if (!first) return 0;
 
   int length = 0;
   const Car *current = first;
   do {
     length++;
+    countOp++;
     current = current->next;
-    countOp++; // Count the move
   } while (current != first);
 
   return length;
