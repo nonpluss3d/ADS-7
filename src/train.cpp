@@ -1,6 +1,4 @@
 // Copyright 2021 NNTU-CS
-#include <cstdlib>
-
 #include "train.h"
 
 Train::Train() : countOp(0), first(nullptr) {}
@@ -22,24 +20,29 @@ void Train::addCar(bool light) {
 }
 
 int Train::getLength() {
-  countOp = 0;
-
   if (!first) return 0;
+
+  countOp = 0;
 
   Car* current = first;
 
-  current->light = true;
+  bool initialLight = current->light;
+
+  current->light = !initialLight;
   countOp++;
 
   int steps = 1;
   current = current->next;
   countOp++;
 
-  while (!current->light) {
+  while (current->light != !initialLight) {
     current = current->next;
     countOp++;
     steps++;
   }
+
+  first->light = initialLight;
+  countOp++;
 
   return steps;
 }
