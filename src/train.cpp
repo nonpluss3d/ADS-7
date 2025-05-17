@@ -1,7 +1,7 @@
 // Copyright 2021 NNTU-CS
-#include "train.h"
-
 #include <random>
+
+#include "train.h"
 
 Train::Train() : countOp(0), first(nullptr) {}
 
@@ -21,7 +21,6 @@ void Train::addCar(bool light) {
   } else {
     Car *last = first->prev;
     countOp++;
-    
     last->next = newCar;
     countOp++;
     newCar->prev = last;
