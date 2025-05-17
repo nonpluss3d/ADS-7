@@ -7,32 +7,29 @@ Train::Train() : countOp(0), first(nullptr) {}
 
 void Train::addCar(bool light) {
   Car *newCar = new Car;
-  countOp++;
   newCar->light = light;
-  countOp++;
 
   if (first == nullptr) {
     first = newCar;
-    countOp++;
     newCar->next = newCar;
-    countOp++;
     newCar->prev = newCar;
-    countOp++;
+
+    countOp += 3;
   } else {
     Car *last = first->prev;
     countOp++;
     last->next = newCar;
-    countOp++;
     newCar->prev = last;
-    countOp++;
     newCar->next = first;
-    countOp++;
     first->prev = newCar;
-    countOp++;
+
+    countOp += 6;
   }
 }
 
 int Train::getLength() {
+  countOp = 0;
+
   if (!first) return 0;
 
   int length = 0;
