@@ -29,7 +29,7 @@ int Train::getLength() {
   const Car *current = first;
   do {
     length++;
-    countOp++;
+    countOp += 2;
     current = current->next;
   } while (current != first);
 
