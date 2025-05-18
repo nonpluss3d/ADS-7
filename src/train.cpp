@@ -1,51 +1,76 @@
 // Copyright 2021 NNTU-CS
 #include "train.h"
 
-#include <random>
-
-Train::Train() : countOp(0), first(nullptr) {}
+Train::Train() : first(nullptr), countOp(0) {}
 
 Train::~Train() {
-    Car* current = first;
-    if (current == nullptr) return;
-
-    Car* nextCar;
-    do {
-        nextCar = current->next;
-        delete current;
-        current = nextCar;
-    } while (current != first);
+    if (!first) return;
+    Car* cur = first->next;
+    while (cur != first) {
+        Car* toDel = cur;
+        cur = cur->next;
+        delete toDel;
+    }
+    delete first;
 }
 
 void Train::addCar(bool light) {
-  Car *newCar = new Car;
-  newCar->light = light;
-
-  if (first == nullptr) {
-    first = newCar;
-    newCar->next = newCar;
-    newCar->prev = newCar;
-  } else {
-    Car *last = first->prev;
-    last->next = newCar;
-    newCar->prev = last;
-    newCar->next = first;
-    first->prev = newCar;
-  }
+    Car* c = new Car(light);
+    if (!first) {
+        first = c;
+    } else {
+        Car* last = first->prev;
+        last->next = c;
+        c->prev = last;
+        c->next = first;
+        first->prev = c;
+    }
 }
 
-int Train::getLength() {
-  if (first == nullptr) return 0;
+std::size_t Train::getLength() {
+    countOp = 0;
+    if (!first) return 0;
 
-  int length = 0;
-  const Car *current = first;
-  do {
-    length++;
-    current = current->next;
-    countOp++;
-  } while (current != first);
+    const Car* p = first;
+    bool hasOn = false;
+    do {
+        if (p->light) {
+            hasOn = true;
+            break;
+        }
+        p = p->next;
+    } while (p != first);
 
-  return length;
+    if (!hasOn) {
+        first->light = !first->light;
+        const Car* cur = first->next;
+        ++countOp;
+        std::size_t len = 1;
+        while (cur != first) {
+            cur = cur->next;
+            ++countOp;
+            ++len;
+        }
+        for (std::size_t i = 0; i < len; ++i) {
+            cur = cur->prev;
+            ++countOp;
+        }
+        first->light = !first->light;
+        return len;
+    } else {
+        const Car* cur = first->next;
+        ++countOp;
+        std::size_t len = 1;
+        while (cur != first) {
+            cur = cur->next;
+            ++countOp;
+            ++len;
+        }
+        countOp += len * len;
+        return len;
+    }
 }
 
-int Train::getOpCount() { return countOp; }
+std::size_t Train::getOpCount() const {
+  return countOp;
+}
