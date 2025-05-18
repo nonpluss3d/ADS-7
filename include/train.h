@@ -5,31 +5,31 @@
 #include <iostream>
 
 class Train {
-private:
-    struct Car {
-        bool light;
-        Car* next;
-        Car* prev;
+ private:
+  struct Car {
+    bool light;
+    Car* next;
+    Car* prev;
 
-        Car(bool l) {
-            light = l;
-            next = this;
-            prev = this;
-        }
-    };
+    Car(bool l) {
+      light = l;
+      next = this;
+      prev = this;
+    }
+  };
 
-    Car* first;
-    unsigned long countOp;
+  Car* first;
+  unsigned long countOp;
 
-public:
-    Train();
-    ~Train();
+ public:
+  Train();
+  ~Train();
 
-    void addCar(bool light);
+  void addCar(bool light);
 
-    unsigned long getLength();
+  unsigned long getLength();
 
-    unsigned long getOpCount() const { return countOp; }
+  unsigned long getOpCount() const { return countOp; }
 };
 
-#endif // INCLUDE_TRAIN_H_
+#endif  // INCLUDE_TRAIN_H_
