@@ -5,21 +5,31 @@
 #include <iostream>
 
 class Train {
- private:
-  struct Car {
-    bool light; // состояние лампочки
-    Car *next;
-    Car *prev;
-  };
-  int countOp; // счетчик шагов (число переходов из вагона в вагон)
-  Car *first;  // точка входа в поезд (первый вагон)
+private:
+    struct Car {
+        bool light;
+        Car* next;
+        Car* prev;
 
- public:
-  Train();
-  ~Train();
-  void addCar(bool light); // добавить вагон с начальным состоянием лампочки
-  int getLength();          // вычислить длину поезда
-  int getOpCount();         // вернуть число переходов (из вагона в вагон)
+        Car(bool l) {
+            light = l;
+            next = this;
+            prev = this;
+        }
+    };
+
+    Car* first;
+    unsigned long countOp;
+
+public:
+    Train();
+    ~Train();
+
+    void addCar(bool light);
+
+    unsigned long getLength();
+
+    unsigned long getOpCount() const { return countOp; }
 };
 
-#endif  // INCLUDE_TRAIN_H_
+#endif // INCLUDE_TRAIN_H_
