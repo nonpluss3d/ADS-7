@@ -12,7 +12,7 @@ class Train {
     Car* next;
     Car* prev;
 
-    Car(bool l) {
+    explicit Car(bool l) {
       light = l;
       next = this;
       prev = this;
