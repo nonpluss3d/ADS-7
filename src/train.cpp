@@ -27,7 +27,7 @@ void Train::addCar(bool light) {
   }
 }
 
-std::size_t Train::getLength() {
+int64_t Train::getLength() {
   countOp = 0;
   if (!first) return 0;
 
@@ -45,13 +45,13 @@ std::size_t Train::getLength() {
     first->light = !first->light;
     const Car* cur = first->next;
     ++countOp;
-    std::size_t len = 1;
+    int64_t len = 1;
     while (cur != first) {
       cur = cur->next;
       ++countOp;
       ++len;
     }
-    for (std::size_t i = 0; i < len; ++i) {
+    for (int64_t i = 0; i < len; ++i) {
       cur = cur->prev;
       ++countOp;
     }
@@ -60,7 +60,7 @@ std::size_t Train::getLength() {
   } else {
     const Car* cur = first->next;
     ++countOp;
-    std::size_t len = 1;
+    int64_t len = 1;
     while (cur != first) {
       cur = cur->next;
       ++countOp;
@@ -71,4 +71,4 @@ std::size_t Train::getLength() {
   }
 }
 
-std::size_t Train::getOpCount() const { return countOp; }
+int64_t Train::getOpCount() const { return countOp; }
