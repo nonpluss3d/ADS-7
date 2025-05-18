@@ -70,5 +70,3 @@ int64_t Train::getLength() {
     return len;
   }
 }
-
-int64_t Train::getOpCount() const { return countOp; }
