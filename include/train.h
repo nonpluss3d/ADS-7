@@ -2,6 +2,7 @@
 #ifndef INCLUDE_TRAIN_H_
 #define INCLUDE_TRAIN_H_
 
+#include <cstdint>
 #include <iostream>
 
 class Train {
@@ -19,7 +20,7 @@ class Train {
   };
 
   Car* first;
-  unsigned long countOp;
+  int64_t countOp;
 
  public:
   Train();
@@ -27,9 +28,9 @@ class Train {
 
   void addCar(bool light);
 
-  unsigned long getLength();
+  int64_t getLength();
 
-  unsigned long getOpCount() const { return countOp; }
+  int64_t getOpCount() const { return countOp; }
 };
 
 #endif  // INCLUDE_TRAIN_H_
